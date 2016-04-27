@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Aix</string>
+    <!--mapactivity-->
+    <string name="mapactionbar_title">离我最近</string>
+    <string name="mapactionbar_shops">所有门店</string>
+    <string name="mapactionbar_right">我的位置</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+
+</resources>
