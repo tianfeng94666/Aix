@@ -1,9 +1,7 @@
-
 package com.example.tianfeng.aix.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +16,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapException;
 import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.NaviPara;
 import com.amap.api.maps.overlay.PoiOverlay;
 import com.amap.api.services.core.LatLonPoint;
@@ -30,6 +27,7 @@ import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+
 import com.example.tianfeng.aix.R;
 import com.example.tianfeng.aix.util.ToastUtil;
 
@@ -61,13 +59,15 @@ public class MapActivity extends Activity implements LocationSource,
     // poi返回的结果
     private PoiResult poiResult;
     //poitems集合
-    List<PoiItem> poiItems;
+    ArrayList<PoiItem> poiItems;
     //用户的纬度
     private double myaltitude;
     //用户的经度
     private double myLongitude;
     //用户所在省份
     private String myProvince;
+    private int i= 0;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +85,11 @@ public class MapActivity extends Activity implements LocationSource,
         actionbarshops.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent();
-                intent.setClass(MapActivity.this,ShopsListviewActivity.class);
+//                intent.setClass(MapActivity.this,XListViewActivity.class);
+                intent.putParcelableArrayListExtra("poiItems",poiItems);
                 startActivity(intent);
             }
         });
@@ -94,8 +97,7 @@ public class MapActivity extends Activity implements LocationSource,
         actionlocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-////获得数据
-//                initdata();
+                flag = false;
             }
         });
 
@@ -103,7 +105,7 @@ public class MapActivity extends Activity implements LocationSource,
         nearestshop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<PoiItem> list = new ArrayList<PoiItem>();
+                List<PoiItem> list = new ArrayList<PoiItem>();
                 list.add(findnearestshop(myaltitude,myLongitude,poiItems));
 
                 aMap.clear();// 清理之前的图标
@@ -111,6 +113,7 @@ public class MapActivity extends Activity implements LocationSource,
                 poiOverlay.removeFromMap();
                 poiOverlay.addToMap();
                 poiOverlay.zoomToSpan();
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(10));
             }
         });
 
@@ -198,12 +201,19 @@ public class MapActivity extends Activity implements LocationSource,
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+
+        System.out.println("-----"+i++);
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
-                myaltitude = aMapLocation.getAltitude();
-                myLongitude = aMapLocation.getLongitude();
-                myProvince = aMapLocation.getProvince();
+                if(flag == false){
+                    myaltitude = aMapLocation.getAltitude();
+                    myLongitude = aMapLocation.getLongitude();
+                    myProvince = aMapLocation.getProvince();
+                    //初始化数据
+                    initdata();
+                    flag = true;
+                }
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
@@ -211,6 +221,9 @@ public class MapActivity extends Activity implements LocationSource,
 
             }
         }
+
+
+
     }
 
     @Override

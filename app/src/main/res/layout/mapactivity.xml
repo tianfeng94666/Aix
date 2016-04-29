@@ -1,56 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/maplinearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="40dp"
         android:background="@android:color/holo_green_light"
-        android:layout_height="40dp">
+        android:orientation="horizontal">
+
         <ImageButton
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="36dp"
-            android:layout_marginLeft="16dp"
             android:id="@+id/mapactionbarleftbut"
-            android:layout_height="35dp" />
+            android:layout_width="36dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp" />
+
         <TextView
             android:id="@+id/actionbatTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_search"
-            android:text="@string/mapactionbar_title"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:text="@string/mapactionbar_title" />
 
         <TextView
             android:id="@+id/actionbatshop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mapactionbar_shops"
-            android:background="@drawable/text_search"
             android:layout_alignTop="@+id/actionbatTitle"
-            android:layout_toRightOf="@+id/actionbatTitle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_toEndOf="@+id/actionbatTitle"
-            android:layout_marginLeft="16dp" />
+            android:layout_toRightOf="@+id/actionbatTitle"
+            android:text="@string/mapactionbar_shops" />
+
         <TextView
             android:id="@+id/actionbatlocate"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
-            android:text="@string/mapactionbar_right"
-            android:layout_centerVertical="true"
-            android:background="@drawable/text_search"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"/>
+            android:layout_centerVertical="true"
+
+            android:layout_marginRight="16dp"
+            android:text="@string/mapactionbar_right" />
 
     </RelativeLayout>
-    <com.amap.api.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <com.amap.api.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.amap.api.maps.MapView>
+        android:layout_height="match_parent"></com.amap.api.maps.MapView>
 </LinearLayout>
